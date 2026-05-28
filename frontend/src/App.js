@@ -35,13 +35,13 @@ function App() {
   };
 
   const fetchStaff = async () => {
-    const response = await fetch("http://127.0.0.1:8000/staff");
+    const response = await fetch("https://restaurant-roster-planner.onrender.com/staff");
     const data = await response.json();
     setStaffList(data);
   };
 
   const fetchShifts = async () => {
-    const response = await fetch("http://127.0.0.1:8000/shift");
+    const response = await fetch("https://restaurant-roster-planner.onrender.com/shift");
     const data = await response.json();
     setShiftList(data);
   };
@@ -90,8 +90,8 @@ function App() {
     e.preventDefault();
 
     const url = editingId
-      ? `http://127.0.0.1:8000/staff/${editingId}`
-      : "http://127.0.0.1:8000/staff";
+      ? `https://restaurant-roster-planner.onrender.com/staff/${editingId}`
+      : "https://restaurant-roster-planner.onrender.com/staff";
 
     const method = editingId ? "PUT" : "POST";
 
@@ -172,7 +172,7 @@ function App() {
       alert("Maximum work hours exceeded!");
       return;
     }
-    await fetch("http://127.0.0.1:8000/shift", {
+    await fetch("https://restaurant-roster-planner.onrender.com/shift", {
   method: "POST",
   headers: {
     "Content-Type": "application/json"
@@ -202,7 +202,7 @@ function App() {
   };
 
   const deleteStaff = async (id) => {
-    await fetch(`http://127.0.0.1:8000/staff/${id}`, {
+    await fetch(`https://restaurant-roster-planner.onrender.com/staff/${id}`, {
       method: "DELETE"
     });
 
@@ -210,7 +210,7 @@ function App() {
   };
 
   const deleteShift = async (id) => {
-    await fetch(`http://127.0.0.1:8000/shift/${id}`, {
+    await fetch(`https://restaurant-roster-planner.onrender.com/shift/${id}`, {
       method: "DELETE"
     });
 
@@ -533,10 +533,7 @@ function App() {
 
     <br />
 
-   🕒 Shift Hours: {
-  item.hours ||
-  SHIFT_HOURS[item.shift_slot]
-} hrs
+   
 
     <br />
 
