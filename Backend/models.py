@@ -19,3 +19,4 @@ class Shift(Base):
     staff_id = Column(Integer)
     day = Column(String)
     shift_slot = Column(String)
+    hours = Column(Integer)

@@ -529,10 +529,15 @@ function App() {
 
     <br />
 
-    📅 {item.day} | ⏰ {item.shift_slot}
 
-    <br />
 
+📅 {item.day} | ⏰ {item.shift_slot}
+
+<br />
+
+🕒 Shift Hours: {item.hours || SHIFT_HOURS[item.shift_slot]} hrs
+
+<br />
    
 
     <br />

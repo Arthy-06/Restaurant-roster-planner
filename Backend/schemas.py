@@ -12,3 +12,4 @@ class ShiftCreate(BaseModel):
     staff_id: int
     day: str
     shift_slot: str
+    hours: int

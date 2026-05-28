@@ -57,7 +57,8 @@ def create_shift(shift: dict, db: Session = Depends(get_db)):
     new_shift = Shift(
     staff_id=shift["shift"]["staff_id"],
     day=shift["shift"]["day"],
-    shift_slot=shift["shift"]["shift_slot"]
+    shift_slot=shift["shift"]["shift_slot"],
+    hours=shift["shift"]["hours"]
 )
 
 
