@@ -15,7 +15,9 @@ function App() {
     hours: ""
   });
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+  localStorage.getItem("loggedIn") === "true"
+);
 
   const [loginData, setLoginData] = useState({
     email: "",
@@ -81,6 +83,7 @@ function App() {
     ) {
       alert("Login successful!");
       setIsLoggedIn(true);
+localStorage.setItem("loggedIn", "true");
     } else {
       alert("Invalid email or password");
     }
@@ -273,7 +276,10 @@ function App() {
         <h3>Welcome, Admin 👋</h3>
 
         <button
-          onClick={() => setIsLoggedIn(false)}
+          onClick={() => {
+  setIsLoggedIn(false);
+  localStorage.removeItem("loggedIn");
+}}
           style={{
             marginTop: "15px",
             padding: "10px 18px",
