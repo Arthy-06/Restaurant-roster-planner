@@ -24,6 +24,16 @@ function App() {
     password: ""
   });
 
+
+  const [registerData, setRegisterData] = useState({
+  name: "",
+  email: "",
+  password: "",
+  role: "Admin"
+});
+
+const [showRegister, setShowRegister] = useState(false);
+
   const [staffList, setStaffList] = useState([]);
   const [shiftList, setShiftList] = useState([]);
   const [editingId, setEditingId] = useState(null);
@@ -76,6 +86,37 @@ function App() {
 
   const handleLogin = async (e) => {
   e.preventDefault();
+
+
+
+  const handleRegisterChange = (e) => {
+  setRegisterData({
+    ...registerData,
+    [e.target.name]: e.target.value
+  });
+};
+
+const handleRegister = async (e) => {
+  e.preventDefault();
+
+  const response = await fetch(
+    "https://restaurant-roster-planner.onrender.com/register",
+    {
+      method: "POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify(registerData)
+    }
+  );
+
+  const data = await response.json();
+
+  alert(data.message);
+};
+
+
+
 
   const response = await fetch(
     "https://restaurant-roster-planner.onrender.com/login",
@@ -275,6 +316,57 @@ function App() {
       </div>
     );
   }
+
+             <button
+ type="button"
+ onClick={() => setShowRegister(!showRegister)}
+ style={buttonStyle}
+>
+ Register
+</button>
+
+{showRegister && (
+<form onSubmit={handleRegister}>
+
+<input
+name="name"
+placeholder="Name"
+onChange={handleRegisterChange}
+style={inputStyle}
+/>
+
+<input
+name="email"
+placeholder="Email"
+onChange={handleRegisterChange}
+style={inputStyle}
+/>
+
+<input
+name="password"
+placeholder="Password"
+type="password"
+onChange={handleRegisterChange}
+style={inputStyle}
+/>
+
+<select
+name="role"
+onChange={handleRegisterChange}
+style={inputStyle}
+>
+<option>Admin</option>
+<option>Manager</option>
+<option>Staff</option>
+</select>
+
+
+<button style={buttonStyle}>
+Create Account
+</button>
+
+</form>
+)}
 
   return (
     <div style={pageStyle}>

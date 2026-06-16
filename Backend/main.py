@@ -42,6 +42,48 @@ def login(data: dict):
     }
 
 
+
+@app.post("/register")
+def register(user: dict, db: Session = Depends(get_db)):
+
+    new_user = User(
+        name=user["name"],
+        email=user["email"],
+        password=user["password"],
+        role=user["role"]
+    )
+
+    db.add(new_user)
+    db.commit()
+
+    return {
+        "message":"User created"
+    }
+
+
+
+@app.post("/login")
+def login(data: dict, db: Session = Depends(get_db)):
+
+    user = db.query(User).filter(
+        User.email == data["email"],
+        User.password == data["password"]
+    ).first()
+
+
+    if user:
+        return {
+            "success":True,
+            "name":user.name,
+            "role":user.role
+        }
+
+
+    return {
+        "success":False
+    }
+
+
 @app.get("/")
 def home():
     return {"message": "Restaurant Staff Roster Planner API running"}
