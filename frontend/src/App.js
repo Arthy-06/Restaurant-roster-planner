@@ -78,27 +78,119 @@ const [showRegister, setShowRegister] = useState(false);
   };
 
   const handleLoginChange = (e) => {
-    setLoginData({
-      ...loginData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleLogin = async (e) => {
-  e.preventDefault();
+  setLoginData({
+    ...loginData,
+    [e.target.name]: e.target.value
+  });
+};
 
 
-
-  const handleRegisterChange = (e) => {
+const handleRegisterChange = (e) => {
   setRegisterData({
     ...registerData,
     [e.target.name]: e.target.value
   });
 };
 
+
 const handleRegister = async (e) => {
+
   e.preventDefault();
 
+
+  const response = await fetch(
+    "https://restaurant-roster-planner.onrender.com/register",
+    {
+      method:"POST",
+
+      headers:{
+        "Content-Type":"application/json"
+      },
+
+      body:JSON.stringify(registerData)
+
+    }
+  );
+
+
+  const data = await response.json();
+
+
+  alert(data.message);
+
+
+  setShowRegister(false);
+
+
+};
+
+
+
+const handleLogin = async (e)=>{
+
+e.preventDefault();
+
+
+const response = await fetch(
+
+"https://restaurant-roster-planner.onrender.com/login",
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+email:loginData.email,
+
+password:loginData.password
+
+})
+
+}
+
+);
+
+
+
+const data = await response.json();
+
+
+
+if(data.success){
+
+
+alert("Login successful!");
+
+setIsLoggedIn(true);
+
+
+localStorage.setItem(
+"loggedIn",
+"true"
+);
+
+
+
+}
+
+else{
+
+
+alert("Invalid email or password");
+
+
+}
+
+
+
+};
   const response = await fetch(
     "https://restaurant-roster-planner.onrender.com/register",
     {
@@ -288,85 +380,186 @@ const handleRegister = async (e) => {
   };
 
   if (!isLoggedIn) {
-    return (
-      <div style={pageStyle}>
-        <div style={cardStyle}>
-          <h2>🔐 Login</h2>
 
-          <form onSubmit={handleLogin}>
-            <input
-              type="email"
-              name="email"
-              placeholder="Enter Email"
-              onChange={handleLoginChange}
-              style={inputStyle}
-            />
+return (
 
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter Password"
-              onChange={handleLoginChange}
-              style={inputStyle}
-            />
+<div style={pageStyle}>
 
-            <button style={buttonStyle}>Login</button>
-          </form>
-        </div>
-      </div>
-    );
-  }
 
-             <button
- type="button"
- onClick={() => setShowRegister(!showRegister)}
- style={buttonStyle}
->
- Register
-</button>
+<div style={cardStyle}>
 
-{showRegister && (
-<form onSubmit={handleRegister}>
+
+<h2>🔐 Login</h2>
+
+
+
+<form onSubmit={handleLogin}>
+
 
 <input
-name="name"
-placeholder="Name"
-onChange={handleRegisterChange}
-style={inputStyle}
-/>
 
-<input
+type="email"
+
 name="email"
-placeholder="Email"
-onChange={handleRegisterChange}
+
+placeholder="Enter Email"
+
+onChange={handleLoginChange}
+
 style={inputStyle}
+
 />
+
+
 
 <input
-name="password"
-placeholder="Password"
+
 type="password"
-onChange={handleRegisterChange}
+
+name="password"
+
+placeholder="Enter Password"
+
+onChange={handleLoginChange}
+
 style={inputStyle}
+
 />
 
-<select
-name="role"
-onChange={handleRegisterChange}
-style={inputStyle}
->
-<option>Admin</option>
-<option>Manager</option>
-<option>Staff</option>
-</select>
 
 
 <button style={buttonStyle}>
-Create Account
+
+Login
+
 </button>
 
+
+
 </form>
-)}
+
+
+
+<button
+
+onClick={()=>setShowRegister(!showRegister)}
+
+style={buttonStyle}
+
+>
+
+Register
+
+</button>
+
+
+
+
+
+{
+
+showRegister &&
+
+
+<form onSubmit={handleRegister}>
+
+
+<h2>Create Account</h2>
+
+
+
+<input
+
+name="name"
+
+placeholder="Name"
+
+onChange={handleRegisterChange}
+
+style={inputStyle}
+
+/>
+
+
+
+<input
+
+name="email"
+
+placeholder="Email"
+
+onChange={handleRegisterChange}
+
+style={inputStyle}
+
+/>
+
+
+
+<input
+
+type="password"
+
+name="password"
+
+placeholder="Password"
+
+onChange={handleRegisterChange}
+
+style={inputStyle}
+
+/>
+
+
+
+<select
+
+name="role"
+
+onChange={handleRegisterChange}
+
+style={inputStyle}
+
+>
+
+
+<option>Admin</option>
+
+<option>Manager</option>
+
+<option>Staff</option>
+
+
+</select>
+
+
+
+<button style={buttonStyle}>
+
+Create Account
+
+</button>
+
+
+
+</form>
+
+
+
+}
+
+
+
+</div>
+
+
+</div>
+
+
+);
+
+
+}
 
   return (
     <div style={pageStyle}>
