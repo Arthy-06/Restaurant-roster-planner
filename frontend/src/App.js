@@ -93,6 +93,7 @@ const handleRegisterChange = (e) => {
 };
 
 
+
 const handleRegister = async (e) => {
 
   e.preventDefault();
@@ -101,14 +102,13 @@ const handleRegister = async (e) => {
   const response = await fetch(
     "https://restaurant-roster-planner.onrender.com/register",
     {
-      method:"POST",
+      method: "POST",
 
-      headers:{
-        "Content-Type":"application/json"
+      headers: {
+        "Content-Type": "application/json"
       },
 
-      body:JSON.stringify(registerData)
-
+      body: JSON.stringify(registerData)
     }
   );
 
@@ -120,7 +120,6 @@ const handleRegister = async (e) => {
 
 
   setShowRegister(false);
-
 
 };
 
@@ -191,51 +190,8 @@ alert("Invalid email or password");
 
 
 };
-  const response = await fetch(
-    "https://restaurant-roster-planner.onrender.com/register",
-    {
-      method: "POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body: JSON.stringify(registerData)
-    }
-  );
+  
 
-  const data = await response.json();
-
-  alert(data.message);
-};
-
-
-
-
-  const response = await fetch(
-    "https://restaurant-roster-planner.onrender.com/login",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email: loginData.email,
-        password: loginData.password
-      })
-    }
-  );
-
-  const data = await response.json();
-
-  if (data.success) {
-    alert("Login successful!");
-
-    setIsLoggedIn(true);
-    localStorage.setItem("loggedIn", "true");
-
-  } else {
-    alert("Invalid email or password");
-  }
-};
 
   const handleStaffSubmit = async (e) => {
     e.preventDefault();
