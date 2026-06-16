@@ -46,6 +46,16 @@ def login(data: dict):
 @app.post("/register")
 def register(user: dict, db: Session = Depends(get_db)):
 
+    existing = db.query(User).filter(
+        User.email == user["email"]
+    ).first()
+
+    if existing:
+        return {
+            "message":"Email already exists"
+        }
+
+
     new_user = User(
         name=user["name"],
         email=user["email"],
@@ -53,11 +63,13 @@ def register(user: dict, db: Session = Depends(get_db)):
         role=user["role"]
     )
 
+
     db.add(new_user)
     db.commit()
 
+
     return {
-        "message":"User created"
+        "message":"Account created successfully"
     }
 
 
