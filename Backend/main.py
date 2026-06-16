@@ -24,6 +24,22 @@ def get_db():
         yield db
     finally:
         db.close()
+@app.post("/login")
+def login(data: dict):
+
+    email = data["email"]
+    password = data["password"]
+
+    if email == "admin@gmail.com" and password == "admin123":
+        return {
+            "success": True,
+            "message": "Login successful"
+        }
+
+    return {
+        "success": False,
+        "message": "Invalid email or password"
+    }
 
 
 @app.get("/")

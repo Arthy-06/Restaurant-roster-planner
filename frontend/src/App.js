@@ -74,20 +74,35 @@ function App() {
     });
   };
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+  const handleLogin = async (e) => {
+  e.preventDefault();
 
-    if (
-      loginData.email === "admin@gmail.com" &&
-      loginData.password === "admin123"
-    ) {
-      alert("Login successful!");
-      setIsLoggedIn(true);
-localStorage.setItem("loggedIn", "true");
-    } else {
-      alert("Invalid email or password");
+  const response = await fetch(
+    "https://restaurant-roster-planner.onrender.com/login",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email: loginData.email,
+        password: loginData.password
+      })
     }
-  };
+  );
+
+  const data = await response.json();
+
+  if (data.success) {
+    alert("Login successful!");
+
+    setIsLoggedIn(true);
+    localStorage.setItem("loggedIn", "true");
+
+  } else {
+    alert("Invalid email or password");
+  }
+};
 
   const handleStaffSubmit = async (e) => {
     e.preventDefault();
