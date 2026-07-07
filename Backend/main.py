@@ -3,18 +3,20 @@ from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 
 from database import engine, Base, SessionLocal
-from models import Staff,Shift
+from models import Staff,Shift,User
 import schemas
 
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:3000",
+        "https://restaurant-roster-planner.netlify.app"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 Base.metadata.create_all(bind=engine)
 
 

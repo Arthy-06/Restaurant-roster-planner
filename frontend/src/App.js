@@ -95,34 +95,53 @@ const handleRegisterChange = (e) => {
 
 
 const handleRegister = async (e) => {
-
   e.preventDefault();
 
+  alert("clicked");
 
-  const response = await fetch(
-    "https://restaurant-roster-planner.onrender.com/register",
-    {
-      method: "POST",
+  console.log("Register data:", registerData);
 
-      headers: {
-        "Content-Type": "application/json"
-      },
+  try {
+    const response = await fetch(
+      "https://restaurant-roster-planner.onrender.com/register",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(registerData)
+      }
+    );
 
-      body: JSON.stringify(registerData)
+    console.log("Status:", response.status);
+
+    const data = await response.json();
+    console.log("Response:", data);
+
+    alert(data.message);
+
+    if (response.ok) {
+      setShowRegister(false);
+
+      setRegisterData({
+        name: "",
+        email: "",
+        password: "",
+        role: "Staff"
+      });
     }
-  );
-
-
-  const data = await response.json();
-
-
-  alert(data.message);
-
-
-  setShowRegister(false);
-
+  } catch (err) {
+    console.error(err);
+    alert("Error connecting to server");
+  }
 };
 
+  
+
+
+
+
+  
 
 
 const handleLogin = async (e)=>{
@@ -132,7 +151,7 @@ e.preventDefault();
 
 const response = await fetch(
 
-"https://restaurant-roster-planner.onrender.com/login",
+ "http://127.0.0.1:8000/register",
 
 {
 
@@ -489,8 +508,7 @@ style={inputStyle}
 </select>
 
 
-
-<button style={buttonStyle}>
+<button type="submit" style={buttonStyle}>
 
 Create Account
 
