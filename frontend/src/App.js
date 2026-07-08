@@ -78,6 +78,8 @@ const [showRegister, setShowRegister] = useState(false);
   };
 
   const handleLoginChange = (e) => {
+      e.preventDefault();
+
   setLoginData({
     ...loginData,
     [e.target.name]: e.target.value
@@ -103,7 +105,7 @@ const handleRegister = async (e) => {
 
   try {
     const response = await fetch(
-      "https://restaurant-roster-planner.onrender.com/register",
+      "http://127.0.0.1:8000/register",
       {
         method: "POST",
         headers: {
@@ -151,7 +153,7 @@ e.preventDefault();
 
 const response = await fetch(
 
- "http://127.0.0.1:8000/register",
+ "http://127.0.0.1:8000/login",
 
 {
 

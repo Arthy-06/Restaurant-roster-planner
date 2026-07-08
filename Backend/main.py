@@ -27,22 +27,38 @@ def get_db():
     finally:
         db.close()
 @app.post("/login")
-def login(data: dict):
+def login(data: dict, db: Session = Depends(get_db)):
 
     email = data["email"]
     password = data["password"]
+    print("Email received:", email)
 
-    if email == "admin@gmail.com" and password == "admin123":
+    user = db.query(User).filter(User.email == email).first()
+
+    print("User found:", user)
+
+    
+    if not user:
         return {
-            "success": True,
-            "message": "Login successful"
+            "success": False,
+            "message": "User not found"
+        }
+
+    if user.password != password:
+        return {
+            "success": False,
+            "message": "Invalid password"
         }
 
     return {
-        "success": False,
-        "message": "Invalid email or password"
+        "success": True,
+        "message": "Login successful",
+        "user": {
+            "name": user.name,
+            "email": user.email,
+            "role": user.role
+        }
     }
-
 
 
 @app.post("/register")
@@ -183,3 +199,8 @@ def update_staff(staff_id: int, updated_staff: schemas.StaffCreate, db: Session 
         return staff
 
     return {"message": "Staff not found"}
+
+@app.get("/users")
+def get_users(db: Session = Depends(get_db)):
+    users = db.query(User).all()
+    return users
