@@ -105,9 +105,10 @@ const handleRegister = async (e) => {
 
   try {
     const response = await fetch(
-      "http://127.0.0.1:8000/register",
+      "https://restaurant-roster-planner.onrender.com/register",
       {
         method: "POST",
+        
         headers: {
           "Content-Type": "application/json"
         },
@@ -153,7 +154,7 @@ e.preventDefault();
 
 const response = await fetch(
 
- "http://127.0.0.1:8000/login",
+ "https://restaurant-roster-planner.onrender.com/login",
 
 {
 
